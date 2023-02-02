@@ -1,0 +1,9 @@
+--------------------------
+> git clone direccion
+----------------------------------------------------------------
+> git init
+> git remote add origin direccion_de_github
+----------------------------------------------------------------
+> git add .
+> git commit -m "mi proyecto inicial de Laravel con Livewire"
+> git push origin master
