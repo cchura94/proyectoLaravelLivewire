@@ -21,3 +21,11 @@ Route::middleware([
 
 // Nuestras rutas
 Route::get('/admin/saludo', [PruebaController::class, "index"]);//->middleware("auth");
+
+Route::get('/admin', function(){
+    return view('admin.index');
+});
+
+Route::get('/admin/usuario', function(){
+    return view('admin.usuario.index');
+});
