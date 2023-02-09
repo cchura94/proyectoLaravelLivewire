@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\PruebaController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Livewire\CategoriaComponent;
 
 
 Route::get('/', function () {
@@ -19,13 +19,18 @@ Route::middleware([
     })->name('dashboard');
 });
 
-// Nuestras rutas
-Route::get('/admin/saludo', [PruebaController::class, "index"]);//->middleware("auth");
+Route::prefix('admin')->middleware("auth")->group(function(){
+    // Nuestras rutas
+    Route::get('/saludo', [PruebaController::class, "index"]);//->middleware("auth");
+    
+    Route::get('/', function(){
+        return view('admin.index');
+    });
+    
+    Route::get('/usuario', function(){
+        return view('admin.usuario.index');
+    });
+    
+    Route::get('/categoria', CategoriaComponent::class);
 
-Route::get('/admin', function(){
-    return view('admin.index');
-});
-
-Route::get('/admin/usuario', function(){
-    return view('admin.usuario.index');
 });
