@@ -1,4 +1,5 @@
- <!-- Bootstrap core JavaScript-->
+@livewireScripts
+<!-- Bootstrap core JavaScript-->
 <script src="{{ asset('theme/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('theme/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
@@ -16,4 +17,3 @@
 <script src="{{ asset('theme/js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('theme/js/demo/chart-pie-demo.js') }}"></script>
 -->
-@livewireScripts

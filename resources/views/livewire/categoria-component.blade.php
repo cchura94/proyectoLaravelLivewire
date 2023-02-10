@@ -1,3 +1,5 @@
+@section("titulo", "Gestión Categorias")
+
 <div class="row">
     <div class="col-md-7">
         <div class="card">
@@ -5,7 +7,6 @@
 
                 <h1>Categoria</h1>
 
-                
 
                 <table class="table table-striped table-hover">
                     <thead>
@@ -23,7 +24,7 @@
                             <td>{{ $cat->nombre }}</td>
                             <td>{{ $cat->detalle }}</td>
                             <td>
-                                <button class="btn btn-warning" wire:click="editarCategoria({{$cat}})"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-warning" wire:click="editarCategoria({{$cat->id}})"><i class="fa fa-edit"></i></button>
 
                             </td>
                         </tr>
@@ -51,7 +52,7 @@
                     <input type="text" wire:model.lazy="detalle" class="form-control">
                     @error('detalle') <span class="alert alert-danger">{{ $message }}</span> @enderror
                 
-                    <button type="submit" class="btn btn-info btn-block">Guardar Categoria</button>
+                    <button type="submit" class="btn btn-info btn-block">{{($id_cat != null)?'Modificar Categoria':'Guardar Categoria'}}</button>
                     <button type="reset" class="btn btn-primary">Reset</button>
                 </form>
 
