@@ -18,4 +18,32 @@ class Producto extends Model
     {
         return $this->belongsToMany(Pedido::class)->withPivot(["cantidad"])->withTimestamps();
     }
+
+    /*
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $prefix = 'COD_';
+            $latest = self::latest('id')->first();
+            if ($latest) {
+                $model->codigo = $prefix . sprintf("%04d", $latest->id + 1);
+            } else {
+                $model->codigo = $prefix . '0001';
+            }
+        });
+    }
+    */
+
+    public static function generateCode()
+    {
+        $prefix = 'COD_';
+        $latest = self::latest('id')->first();
+        if ($latest) {
+            return $prefix . sprintf("%04d", $latest->id + 1);
+        } else {
+            return $prefix . '0001';
+        }
+    }
 }
