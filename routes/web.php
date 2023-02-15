@@ -32,7 +32,15 @@ Route::prefix('admin')->middleware("auth")->group(function(){
         return view('admin.usuario.index');
     });
     
-    Route::get('/categoria', CategoriaComponent::class);
-    Route::get('/producto', ProductoComponent::class);
+    Route::get('/categoria', CategoriaComponent::class)->name("categoria");
+    Route::get('/producto', ProductoComponent::class)->name('producto');
+
+    Route::get("/cliente", function(){
+        return view("livewire.clientes.index");
+    });
+
+    Route::get("/nota", function(){
+        return view("livewire.notas.index");
+    });
 
 });
