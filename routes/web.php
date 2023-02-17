@@ -43,4 +43,8 @@ Route::prefix('admin')->middleware("auth")->group(function(){
         return view("livewire.notas.index");
     });
 
+    Route::get("/pedido/nuevo", function(){
+        return view("livewire.admin.pedido.index-nuevo");
+    });
+
 });
