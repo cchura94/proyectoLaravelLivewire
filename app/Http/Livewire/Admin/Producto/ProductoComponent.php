@@ -14,6 +14,9 @@ class ProductoComponent extends Component
 
     protected $paginationTheme = 'bootstrap';
 
+    public $nombreComponent = "Producto";
+    public $id_seleccionado = 0;
+
     public $search = '';
     public $categoria_filter = '';
     public $rows = 2;
@@ -35,7 +38,7 @@ class ProductoComponent extends Component
 
 
 
-    public function guardarProducto()
+    public function store()
     {
         $this->validate();
 
@@ -50,6 +53,55 @@ class ProductoComponent extends Component
 
         $this->imagen->store('imagenes');
         
+    }
+
+    public function edit($id)
+    {
+        $this->id_seleccionado = $id;
+
+        $producto = Producto::find($id);
+        
+        $this->nombre = $producto->nombre;
+        $this->precio = $producto->precio;
+        $this->cantidad = $producto->cantidad;
+        $this->descripcion = $producto->descripcion;
+        $this->categoria_id = $producto->categoria_id;
+    }
+
+    public function update()
+    {
+        $this->validate([
+            "nombre" => "required|min:3|max:200",
+            "categoria_id" => "required",
+            "cantidad" => "required",
+            'imagen' => 'image|max:10000'
+        ]);
+    
+            if ($this->id_seleccionado>0) {
+                $prod = Producto::find($this->id_seleccionado);
+                $prod->nombre = $this->nombre;
+                $prod->precio = $this->precio;
+                $prod->cantidad = $this->cantidad;
+                $prod->categoria_id = $this->categoria_id;
+                $prod->descripcion = $this->descripcion;
+                $prod->update();
+    
+                $this->resetInput();
+                // $this->dispatchBrowserEvent('closeModal');
+                // session()->flash('message', 'Cliente Successfully updated.');
+            }
+    }
+
+    public function resetInput()
+    {		
+        $this->id_seleccionado = 0;
+
+		$this->nombre = null;
+		$this->cantidad = null;
+		$this->precio = null;
+		$this->categoria_id = null;
+        $this->descripcion = null;
+        $this->imagen = null;
     }
 
     public function render()

@@ -7,6 +7,24 @@
 
                 <h1>Categoria</h1>
 
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Nueva Categoria
+                </button>
+
+                @include("common.modalHead")
+                    
+                <div class="form-group">
+                    <label for="nom">Ingrese Nombre</label>
+                    <input type="text" wire:model.lazy="nombre" class="form-control @error('nombre')is-invalid @enderror" id="nom">
+                    @error('nombre') <span class="alert alert-danger">{{ $message }}</span> @enderror
+                
+                </div>
+                    <input type="text" wire:model.lazy="detalle" class="form-control">
+                    @error('detalle') <span class="alert alert-danger">{{ $message }}</span> @enderror
+                
+
+                @include("common.modalFooter")
+
 
                 <table class="table table-striped table-hover">
                     <thead>
@@ -26,6 +44,9 @@
                             <td>
                                 <button class="btn btn-warning" wire:click="editarCategoria({{$cat->id}})"><i class="fa fa-edit"></i></button>
 
+                                <button type="button" wire:click="editarCategoria({{$cat->id}})" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-edit"></i>
+                                </button>
                             </td>
                         </tr>
 
@@ -42,7 +63,7 @@
         <div class="card">
             <div class="card-body">
                 
-            <form wire:submit.prevent="guardarCategoria">
+            <form wire:submit.prevent="store">
                 <div class="form-group">
                     <label for="nom">Ingrese Nombre</label>
                     <input type="text" wire:model.lazy="nombre" class="form-control @error('nombre')is-invalid @enderror" id="nom">

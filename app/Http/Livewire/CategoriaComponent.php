@@ -7,6 +7,9 @@ use Livewire\Component;
 
 class CategoriaComponent extends Component
 {
+    public $nombreComponent = "Categoria";
+    public $id_seleccionado = 0;
+
     public $id_cat = null;
     public $nombre;
     public $detalle;
@@ -20,7 +23,7 @@ class CategoriaComponent extends Component
         $this->validateOnly($nombre);
     }
 
-    public function guardarCategoria()
+    public function store()
     {
         
 
@@ -52,13 +55,35 @@ class CategoriaComponent extends Component
         
     }
 
+    public function update()
+    {
+
+        $cat = Categoria::find($this->id_cat);
+            $cat->nombre = $this->nombre;
+            $cat->detalle = $this->detalle;
+            $cat->update();
+
+            $this->id_cat = null;
+            $this->id_seleccionado = 0;
+        
+    }
+
     public function editarCategoria($id)
     {
+        $this->id_seleccionado = $id;
         $this->id_cat = $id;
         $cate = Categoria::find($id);
 
         $this->nombre = $cate->nombre;
         $this->detalle = $cate->detalle;
+    }
+
+    public function resetInput()
+    {
+        $this->id_seleccionado = 0;
+        $this->nombre = '';
+        $this->detalle = '';
+        
     }
 
     public function render()
