@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire\Admin\Pedido;
 
+use App\Models\Cliente;
+use App\Models\Pedido;
 use App\Models\Producto;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,6 +17,8 @@ class NuevoPedidoComponent extends Component
 
     public $search = "";
     public $carrito = [];
+    public $cliente_selecionado;
+    public $buscar_cliente = "";
 
     public function mount()
     {
@@ -52,19 +57,53 @@ class NuevoPedidoComponent extends Component
 
         session()->flash('message', 'Producto quitado.');
     }
-/*
-$clave = array_search($id_c, array_column($this->carrito, 'id'));
-if ($clave !== false) {
-    unset($this->carrito[$clave]);
-}*/
-        
-    
+
+    public function seleccionarClie($clie_id)
+    {
+        $this->cliente_selecionado = Cliente::find($clie_id);
+    }
+
+    public function guardarPedido()
+    {
+        if(isset($this->cliente_selecionado->id)){
+            DB::beginTransaction();
+
+            try {
+                $pedido = new Pedido();
+                $pedido->fecha = date('Y-m-d H:i:s');
+                $pedido->cod_ped = Pedido::generateCode();
+                $pedido->estado = 1; // EN PROCESO
+
+                $pedido->cliente_id = $this->cliente_selecionado->id;
+                $pedido->save();
+
+                foreach ($this->carrito as $carr) {
+                    $pedido->productos()->attach($carr['id'], ["cantidad" => $carr['cantidad']]);
+                }
+
+                $pedido->estado = 2;
+                $pedido->update();
+
+                DB::commit();
+                // all good
+            } catch (\Exception $e) {
+                DB::rollback();
+                // something went wrong
+            }
+
+            
+        }else{
+
+        }        
+    }
 
 
     public function render()
     {
         $productos = Producto::where('nombre', 'like', '%'.$this->search.'%')->paginate(5);
 
-        return view('livewire.admin.pedido.nuevo-pedido-component', compact("productos"));
+        $clientes = Cliente::where('ci_nit', 'like', '%'.$this->buscar_cliente.'%')->paginate(2);
+
+        return view('livewire.admin.pedido.nuevo-pedido-component', compact("productos", "clientes"));
     }
 }

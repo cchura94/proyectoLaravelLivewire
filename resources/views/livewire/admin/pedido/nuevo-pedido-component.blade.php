@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <h5>Lista de Productos</h5>
 
-                    <input type="text" wire:model="search" class="form-control">
+                    <input type="text" wire:model.debounce.500ms="search" class="form-control">
                     
                     <table class="table table-striped table-hover">
                         <thead>
@@ -94,6 +94,34 @@
                     <div class="card">
                         <div class="card-body">
                             <h5>Cliente</h5>
+                            <div class="table-responsive">
+                                @if($cliente_selecionado)                                
+                                <strong>CLIENTE: {{ $cliente_selecionado->nombre_completo }}</strong>
+<br>
+                                <strong>CI/NIT: {{ $cliente_selecionado->ci_nit }}</strong>
+                                @endif
+                                <input type="text" class="form-control" wire:model="buscar_cliente">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>CI/NIT</th>
+                                            <th>NOMBRES</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($clientes as $clie)
+                                        <tr>
+                                            <td>{{ $clie->ci_nit }}</td>
+                                            <td>{{ $clie->nombre_completo }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" wire:click="seleccionarClie({{ $clie->id }})"><i class="fa fa-user"></i></button>
+                                            </td>
+                                        </tr>                                            
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
 
                         </div>
                     </div>
@@ -102,7 +130,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5>Guardar</h5>
+                            <button class="btn btn-success btn-block" wire:click="guardarPedido()">Guardar Pedido</button>
                         </div>
                     </div>
                 </div>

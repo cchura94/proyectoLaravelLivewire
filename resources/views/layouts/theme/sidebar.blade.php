@@ -77,8 +77,8 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Pedidos:</h6>
-                        <a class="collapse-item" href="login.html">Nuevo Pedido</a>
-                        <a class="collapse-item" href="register.html">Lista Pedidos</a>
+                        <a class="collapse-item" href="/admin/pedido/nuevo">Nuevo Pedido</a>
+                        <a class="collapse-item" href="/admin/pedido">Lista Pedidos</a>
                         <a class="collapse-item" href="/admin/cliente">Clientes</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
