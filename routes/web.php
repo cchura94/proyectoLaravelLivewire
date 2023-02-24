@@ -47,4 +47,8 @@ Route::prefix('admin')->middleware("auth")->group(function(){
         return view("livewire.admin.pedido.index-nuevo");
     });
 
+    Route::get("/pedido", function(){
+        return view("livewire.admin.pedido.index");
+    });
+
 });

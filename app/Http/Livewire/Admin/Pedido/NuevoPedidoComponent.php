@@ -13,6 +13,8 @@ class NuevoPedidoComponent extends Component
 {
     use WithPagination;
 
+    protected $listeners = ['limpiar' => 'resetInput'];
+
     protected $paginationTheme = 'bootstrap';
 
     public $search = "";
@@ -22,6 +24,15 @@ class NuevoPedidoComponent extends Component
 
     public function mount()
     {
+        
+    }
+
+    public function resetInput()
+    {
+        $this->search = '';
+        $this->carrito = [];
+        $this->cliente_selecionado = null;
+        $this->buscar_cliente = '';
         
     }
 
@@ -85,6 +96,12 @@ class NuevoPedidoComponent extends Component
                 $pedido->update();
 
                 DB::commit();
+
+                $pedido->cliente;
+
+                $this->emit('limpiar');
+
+                $this->emit('guardado', $pedido);
                 // all good
             } catch (\Exception $e) {
                 DB::rollback();

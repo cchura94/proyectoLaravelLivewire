@@ -131,11 +131,13 @@
                     <div class="card">
                         <div class="card-body">
                             <button class="btn btn-success btn-block" wire:click="guardarPedido()">Guardar Pedido</button>
+                            <button class="btn btn-info btn-block" wire:click="$emit('limpiar')">LIMPIAR</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>    
-    </div>   
+    </div> 
 
+    
 </div>
